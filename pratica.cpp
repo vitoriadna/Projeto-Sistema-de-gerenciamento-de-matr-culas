@@ -3,99 +3,107 @@
 #include <limits>
 #define MAX 10
 using namespace std;
-include <vector>;
 
 //Definir a struct do curso
-
 struct Curso {
-    int codigo;
-    string nome;
-    int carga;
+    int codigoCurso;
+    string nomeCurso;
+    int cargaHoraria;
     int vagas;
 };
 
-//Definir a struct dos alunos
 struct Aluno {
     int matricula;
-    string nome;
+    string nomeAluno;
     int idade;
-    int codigoCurso;
+    int codigoCursoMatriculado;
 };
 
-
-// Procedimento para exibir um menu de opçoes
-void mostrarMenu(){
-    cout << "**************MENU*************\n";
-    cout << "1 - para cadastrar curso. \n";
-    cout << "2 - para mostrar os cursos cadastrados.\n";
-    cout << "3 - para cadastrar aluno. \n";
-    cout << "4 - para mostrar os alunos cadastrados.\n";
-    cout << "5 - para buscar alunos por curso \n";
-    cout << "6 - para mostrar o relatorio geral.\n";
-    cout << "*******************************\n";
-    cout << "Digite sua opcao: \n";
+void menu() {
+    cout << "####### opção 1 - Cadastrar Curso ######## \n";
+    cout << "####### opção 2 - Cadastrar Aluno ######## \n";
+    cout << "####### opção 3 - Listar Cursos disponiveis ######## \n";
+    cout << "####### opção 4 - Listar Alunos matriculados ######## \n"; 
+    cout << "####### opção 5 - Buscar aluno por curso ######## \n";
+    cout << "####### opção 6 - Emitir relatorio geral ######## \n";
+    cout << "####### opção 7 - Sair ########" << endl;
 }
 
-//Procedimento para cadastrar um novo curso
-void cadastrarCurso(Cursos curso[], int &qtdCursos){
-    cout << "Digite o codigo do curso:  \n";
-    cin >> Cursos[qtdCursos].curso;
+void cadastrarCurso (Curso listaCursos[],int &qtdCursos ){
+    cout << "Digite o codigo do curso" << endl;
+    cin >> listaCursos[qtdCursos].codigoCurso; // le o codigo digitado e guarda em codigoCurso,que esta na posição qtdCursos.
+    for(int i = 0; i < qtdCursos; i++){ //percorrer os cursos já cadatrados e conferir se o codigo digitado já existe.
+        if(listaCursos[i].codigoCurso == listaCursos[qtdCursos].codigoCurso){ //Compara o meu codigo do curso que já foi cadastrado é igual ao que o usurio acabou de digitar na ultima posição de qtdCursos.
+            cout << "Erro! Curso já cadastrado. " << endl;
+            return;
 
-    cout << "Digite o nome do curso:    \n";
-    cin.ignore(); //Descarta o enter do teclado
-    getline(cin, cursos[qtdCursos].curso); //ele lê o nome inteiro com espaços, até encontrar com um enter e ai ele manda para a string.
-   
+        }
+    }
 
-    cout << "Digite a carga horária do curso:   \n";
-    cin << curso.[qtdCursos].cargaHoraria;
+    cout << "Digite o nome do curso" << endl;
+    cin.ignore(); // Descarta o enter que sobrou depois do codigo do curso digitado pelo usuario.
+    getline(cin,listaCursos[qtdCursos].nomeCurso); // le toda a conteudo digitado pelo usuario permitindo espaços, e para com um enter, guarando a informação em nomeCurso 
 
+    cout << "Digite a carga horaria " << endl;
+    cin >> listaCursos[qtdCursos].cargaHoraria;
 
+    cout << "Digite a quantidade de vagas disponiveis para o curso" << endl;
+    cin >> listaCursos[qtdCursos].vagas;
 
- }
+    qtdCursos++;  // aumenta o contador para o proximo curso ser guardado na posição seguinte, sendo possivel pois eu usei o & alterando na "Fonte".
+} 
 
+void cadastrarAluno ( Aluno ListaAlunos[],int &qtdAlunos){
+    cout << "Digite a matricula do aluno  " << endl;
+    cin >> listaAlunos[qtdAlunos].matricula; 
+
+    cout << "Digite o nome do aluno" << endl;
+    cin.ignore(); 
+    getline(cin,listaAlunos[qtdAlunos].nomeAluno); 
+
+    cout << "Digite a idade do aluno " << endl;
+    cin >> listaAlunos[qtdAlunos].idade;
+
+    cout << "Digite o codigo do curso do qual o aluno deseja se matricular" << endl;
+    cin >> listaAlunos[qtdAlunos].codigoCursoMatriculado;
+
+    for(int i = 0; i < qtdAlunos; i++){ 
+
+    qtdAlunos++; 
+}
 
 
 
 int main(){
-    //Declarar os vetores
-    Cursos curso[MAX];
-    Alunos aluno[MAX];
-
-    //Contadores
+codigoCursoMatriculado
+    Curso cursoDisponivel [ MAX ];
     int qtdCursos = 0;
-    int qtdtAlunos = 0;
-    int opcao;
 
-    while(true){
-        mostrarMenu();
-        cin >> opcao;
+    Aluno alunoMatriculado [ MAX ];
+    int qtdAlunos = 0;
 
-        if(opcao == 0)
+
+    int opcaoEscolhida = 1;
+
+
+    while (opcaoEscolhida != 7)
+    {
+        menu();
+        cout << "Digite a opcao desejada " << endl;
+        cin >> opcaoEscolhida;
+
+        switch (opcaoEscolhida)
+        {
+        case 1:
+            cadastrarCurso(cursoDisponivel,qtdCursos);
             break;
-        switch (opcao){
-            case 1:
-                cadastrarFuncionario(listaFuncionario, &contFuncionarios);
-                break;
-            case 2:
-                mostrarFuncionarios(listaFuncionario, contFuncionarios);
-                break;
-            case 3:
-                cadastrarTipoProduto(listaTipoProduto, &contTipos);
-                break;
-            case 4:
-                mostrarTiposProduto(listaTipoProduto, contTipos);
-                break;
-            case 5:
-                cadastrarProduto(listaProduto, &contProdutos, listaTipoProduto, contTipos);
-                break;
-            case 6:
-                mostrarProdutos(listaProduto, contProdutos, listaTipoProduto, contTipos);
-                break;
-            default:
-                cout <<"opcao invalida. Digite novamente. \n";
-                break;
+        
+        default:
+        cout << "opcao invalida" << endl;
+            break;
         }
     }
+    
 
     return 0;
 }
